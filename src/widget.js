@@ -102,3 +102,10 @@
     }
       
 })()
+function GAstartAnimation(elm){
+    elm.getElementsByTagName("iframe")[0].contentWindow.postMessage('hello', '*');
+}
+function testStartAnimation(){
+    var g = document.getElementsByTagName("g:info-tribe")[0];
+    GAstartAnimation(g);
+}
