@@ -10,8 +10,9 @@
             iframe.style.width = "100%";
             iframe.style.height = "100%";
             iframe.style.overflow = "hidden";
-            var url = "http://fbapp.greenapes.com/embed_widget/#/{0.ape}/month/{0.month}/{0.topic}?animation={0.animation}".supplant([o]);
-            window.console.log(url)
+            iframe.style.borderStyle = "none";
+            var url = "http://localhost:5001/widget#/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?animations=true&animation={0.animation}".supplant([o]);
+            window.console.log(url);
             iframe.src = url;
             node.appendChild(iframe);
         }
@@ -21,8 +22,7 @@
     var TAG_HANDLERS = {
         'g:info-tribe': HANDLERS.info_embed
     }
-
-
+    
     /*  HELPER
         supplant */
     if(!String.prototype.supplant) {
@@ -54,15 +54,21 @@
             var attrs = ele.attributes;
             var length = attrs.length;
             for(var i = 0; i < length; i++)
-                if(attrs[i].nodeName === attr)
+                if(attrs[i].nodeName === attr) {
                     result = attrs[i].nodeValue;
+                    break;
+                }
         }
         return result;
     }
 
     /* HELPER
     get an options object from a DOM node 
-    and an array of strings corresponding to the node's attributes */
+    and an array of strings corresponding to the node's attributes
+
+        var a = document.getElementById('a_link');
+        getOptions(a, ['href', 'target']);
+    */
     function getOptions(node, a_list_of_attrs){
         var o = {};
         for(var i in a_list_of_attrs){
