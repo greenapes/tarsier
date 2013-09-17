@@ -1,4 +1,4 @@
-widgets.js build system
+tarsier js build system
 =
 
 requirements:
