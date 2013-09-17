@@ -103,7 +103,7 @@
       
 })()
 function GAstartAnimation(elm){
-    elm.getElementsByTagName("iframe")[0].contentWindow.postMessage('hello', '*');
+    elm.getElementsByTagName("iframe")[0].contentWindow.postMessage('animate!', '*');
 }
 function testStartAnimation(){
     var g = document.getElementsByTagName("g:info-tribe")[0];
