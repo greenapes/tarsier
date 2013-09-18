@@ -10,6 +10,12 @@ function info_embed(node){
     var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}".supplant([o, default_url]);
     iframe.src = url;
     node.appendChild(iframe);
+    var ms = parseFloat(o.animation);
+    if(!isNaN(ms)){ //mean that the parameter is a number that represent the delay in ms before we start the animation
+    	setTimeout(function(){
+    		T.startAnimation();
+    	}, ms)
+    }
 }
 
 /* functions declaration for various widget embedding */
