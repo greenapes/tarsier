@@ -7,7 +7,7 @@ function info_embed(node){
     iframe.style.height = "100%";
     iframe.style.overflow = "hidden";
     iframe.style.borderStyle = "none";
-    var url = "{1}/widget#/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?animations=true&animation={0.animation}".supplant([o, default_url]);
+    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}".supplant([o, default_url]);
     iframe.src = url;
     node.appendChild(iframe);
 }
