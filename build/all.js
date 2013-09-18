@@ -68,9 +68,9 @@
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
     
-    T.testStartAnimation = function(){
-        var g = document.getElementsByTagName("g:info-tribe")[0];
-        GAstartAnimation(g);
+    T.startAnimation = function(){
+        var g = document.getElementsByTagName("ga:info-tribe")[0];
+        T.sendMessage(g, "animate!");
     }
 
     /* IE8 special tags fix */   
@@ -99,7 +99,7 @@
     }
     window.T = T; 
 })();
-;var default_url = "http://localhost:5001";var default_url = default_url || "http://localhost/";
+;var default_url = "http://localhost:5001/";var default_url = default_url || "http://localhost/";
 
 function info_embed(node){
     var o = T.getOptions(node, ["ape", "month", "topic", "animation"]);
@@ -108,9 +108,15 @@ function info_embed(node){
     iframe.style.height = "100%";
     iframe.style.overflow = "hidden";
     iframe.style.borderStyle = "none";
-    var url = "{1}/widget#/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?animations=true&animation={0.animation}".supplant([o, default_url]);
+    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}".supplant([o, default_url]);
     iframe.src = url;
     node.appendChild(iframe);
+    var ms = parseFloat(o.animation);
+    if(!isNaN(ms)){ //mean that the parameter is a number that represent the delay in ms before we start the animation
+    	setTimeout(function(){
+    		T.startAnimation();
+    	}, ms)
+    }
 }
 
 /* functions declaration for various widget embedding */
