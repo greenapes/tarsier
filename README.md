@@ -14,7 +14,7 @@ Embed greenApes widgets in your page
 first of all, you need to include the script in your page head section:
 
 ```html
-<script src="https://cdm./tarsier.min.js"></script>
+<script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
 ```
 
 ### 2. ga:tag
