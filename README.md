@@ -70,7 +70,7 @@ T.sendMessage(g, "animate!");
 
 ##### example of topic home
 
-![](assets/ga_info-tribe_home)
+![](assets/ga_info-tribe_home.png)
 
 ##### example of topic shopping
 
