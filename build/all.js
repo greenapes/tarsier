@@ -68,9 +68,9 @@
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
     
-    T.startAnimation = function(){
-        var g = document.getElementsByTagName("ga:info-tribe")[0];
-        T.sendMessage(g, "animate!");
+    T.startAnimation = function(tag){
+        if(tag)
+            T.sendMessage(tag, "animate!");
     }
 
     /* IE8 special tags fix */   
@@ -100,7 +100,8 @@
     window.T = T; 
 })();
 ;// https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js
-var default_url = "https://fbapp.greenapes.com/";var default_url = default_url || "http://localhost/";
+var default_url = "https://fbapp.greenapes.com/";
+//var default_url = "http://localhost:5001/";;var default_url = default_url || "http://localhost/";
 
 function info_embed(node){
     var o = T.getOptions(node, ["ape", "month", "topic", "animation"]);
@@ -115,7 +116,7 @@ function info_embed(node){
     var ms = parseFloat(o.animation);
     if(!isNaN(ms)){ //mean that the parameter is a number that represent the delay in ms before we start the animation
     	setTimeout(function(){
-    		T.startAnimation();
+    		T.startAnimation(node);
     	}, ms)
     }
 }

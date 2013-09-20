@@ -13,7 +13,7 @@ function info_embed(node){
     var ms = parseFloat(o.animation);
     if(!isNaN(ms)){ //mean that the parameter is a number that represent the delay in ms before we start the animation
     	setTimeout(function(){
-    		T.startAnimation();
+    		T.startAnimation(node);
     	}, ms)
     }
 }
