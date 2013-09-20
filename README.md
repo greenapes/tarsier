@@ -7,11 +7,12 @@ users of greenApes (www.greenapes.com).
 
 
 
-Embed greenApes widgets in your page
+Embed greenApes widgets in your page in 3 steps!!
 ----------------------------------------------------------
 ### 1. script
 
-first of all, you need to include the script in your page head section:
+first of all, you need to include the tarsier.min.js script in your page head section.
+Sure you can use the greenApes cdn if you want!
 
 ```html
 <script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
@@ -44,18 +45,30 @@ this tag is for the widget of a tribe's infographic
 
 #### parameters:
 
-* ape: 
-* month:
-* animation: [ none | delay in ms | manual | scroll ]
+* ape: your greenapes username; for the global infograph use "greenapes"
+* month: 2 digit number from 01 to 12 rapresenting a month
+* animation: [ none | delay in ms | manual ]
 
-#### animate!
+    ##### animation = none:
 
-if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
+    the widget will show the infograph as soon as it can
+    
+    ##### animation  = delay in ms:
 
-```javascript
-var g = document.getElementsByTagName("ga:info-tribe")[0];
-T.sendMessage(g, "animate!");
-```
+    the widget will draw the infograph using an animation that will start after N ms from its laod is complete
+
+    ##### animation = manual:
+
+    the widget will not draw the infograph, the drawing animation can be started using sendMessage
+
+    ##### animate!
+
+    if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
+
+    ```javascript
+    var g = document.getElementsByTagName("ga:info-tribe")[0];
+    T.sendMessage(g, "animate!");
+    ```
 
 
 * topic: [ actions | eating | housing | jungle | shopping ]
@@ -70,7 +83,7 @@ T.sendMessage(g, "animate!");
 
 ##### example of topic home
 
-![](assets/ga_info-tribe_home)
+![](assets/ga_info-tribe_home.png)
 
 ##### example of topic shopping
 
