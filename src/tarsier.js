@@ -68,9 +68,9 @@
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
     
-    T.startAnimation = function(){
-        var g = document.getElementsByTagName("ga:info-tribe")[0];
-        T.sendMessage(g, "animate!");
+    T.startAnimation = function(tag){
+        if(tag)
+            T.sendMessage(tag, "animate!");
     }
 
     /* IE8 special tags fix */   
