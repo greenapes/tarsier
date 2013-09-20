@@ -45,7 +45,8 @@ this tag is for the widget of a tribe's infographic
 #### parameters:
 
 * ape: 
-* month:
+* month: 
+* topic: [ actions | eating | housing | jungle | shopping ]
 * animation: [ none | delay in ms | manual | scroll ]
 
 #### animate!
@@ -56,29 +57,6 @@ if the animation attribute is set to manual, to start the chart animation you wi
 var g = document.getElementsByTagName("ga:info-tribe")[0];
 T.sendMessage(g, "animate!");
 ```
-
-
-* topic: [ actions | eating | housing | jungle | shopping ]
-
-##### example of topic actions
-
-![](assets/ga_info-tribe_actions.png)
-
-##### example of topic eating
-
-![](assets/ga_info-tribe_eating.png)
-
-##### example of topic home
-
-![](assets/ga_info-tribe_home.png)
-
-##### example of topic shopping
-
-![](assets/ga_info-tribe_shopping.png)
-
-#####example of topic jungle
-
-![](assets/ga_info-tribe_social.png)
 
 
 Use the library in your own project
