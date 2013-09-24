@@ -2,6 +2,7 @@
     
     var T = {};
 
+    T.widgets = [];
     /* mapping between tag name supported and appropriate function handler */
     TAG_HANDLERS = {};
 

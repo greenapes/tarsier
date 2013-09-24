@@ -7,7 +7,8 @@ function info_embed(node){
     iframe.style.height = "100%";
     iframe.style.overflow = "hidden";
     iframe.style.borderStyle = "none";
-    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}".supplant([o, default_url]);
+    n = T.widgets.length;
+    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}&id={2}".supplant([o, default_url, n]);
     iframe.src = url;
     node.appendChild(iframe);
     var ms = parseFloat(o.animation);
@@ -16,6 +17,7 @@ function info_embed(node){
     		T.startAnimation(node);
     	}, ms)
     }
+    T.widgets.push(node);
 }
 
 /* functions declaration for various widget embedding */
