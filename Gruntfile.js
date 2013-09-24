@@ -19,11 +19,35 @@ module.exports = function(grunt) {
 	        src: 'build/all.js',
 	        dest: 'build/<%= pkg.name %>.min.js'
 	      }
-		}
+		},
+		watch: {
+		  scripts: {
+			files: ['src/*.js'],
+			tasks: ['default'],
+			options: {
+			  spawn: false,
+			},
+		  },
+		},
+		'http-server': {
+	        'dev': {
+	                // the server root directory
+	                root: "./build/",
+	                port: 8000,
+	                host: "10.6.6.207",
+	                showDir : true,
+	                autoIndex: true,
+	                defaultExt: "html",
+	                //wait or not for the process to finish
+	                runInBAckground: false    
+	            }
+	    }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-http-server');
 	grunt.registerTask('default', ['concat', 'uglify']);
 };
 
