@@ -7,11 +7,12 @@ users of greenApes (www.greenapes.com).
 
 
 
-Embed greenApes widgets in your page
+Embed greenApes widgets in your page in 3 steps!!
 ----------------------------------------------------------
 ### 1. script
 
-first of all, you need to include the script in your page head section:
+first of all, you need to include the tarsier.min.js script in your page head section.
+Sure you can use the greenApes cdn if you want!
 
 ```html
 <script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
@@ -46,17 +47,16 @@ this tag is for the widget of a tribe's infographic
 
 * ape: 
 * month:
-* preload: [fade | top]
-choose the preferred animation for preload
 * animation: [ none | delay in ms | manual | scroll ]
+
 #### animate!
 
-if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
+    if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
 
-```javascript
-var g = document.getElementsByTagName("ga:info-tribe")[0];
-T.sendMessage(g, "animate!");
-```
+    ```javascript
+    var g = document.getElementsByTagName("ga:info-tribe")[0];
+    T.sendMessage(g, "animate!");
+    ```
 
 
 * topic: [ actions | eating | housing | jungle | shopping ]
@@ -71,7 +71,7 @@ T.sendMessage(g, "animate!");
 
 ##### example of topic home
 
-![](assets/ga_info-tribe_home)
+![](assets/ga_info-tribe_home.png)
 
 ##### example of topic shopping
 
