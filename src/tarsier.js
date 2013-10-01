@@ -5,7 +5,8 @@
     T.widgets = [];
     /* mapping between tag name supported and appropriate function handler */
     TAG_HANDLERS = {};
-
+    var TAGS = [];
+    var IS_IE8 = false;
     T.registerHandler = function(TAG_NAME, HANDLER) {
         TAG_HANDLERS[TAG_NAME] = HANDLER;
     }
@@ -49,6 +50,9 @@
         return result;
     }
 
+    T.setAttribute = function(ele, attr, value) {
+        ele.setAttribute(attr, value);
+    }
     /* HELPER
     get an options object from a DOM node 
     and an array of strings corresponding to the node's attributes
@@ -64,37 +68,106 @@
         }
         return o;
     }
-    
+    T.setOptions = function(node, options){
+        var o = {};
+        for(var o in options){
+            T.setAttribute(node, o, options[o]);
+        }
+    }
     T.sendMessage = function(elm, msg){
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
     
     T.startAnimation = function(tag){
-        if(tag)
+        if(tag){
             T.sendMessage(tag, "animate!");
+        }
     }
 
-    /* IE8 special tags fix */   
-    if (navigator.appName.match("Microsoft")) {
-        var ua = navigator.userAgent;
-        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) != null){
-            rv = parseFloat(RegExp.$1);
-            if(rv < 9){
-                for(var tag in TAG_HANDLERS){
-                    document.createElement(tag);     
+    T.createEvent = function(event_name){
+        if (document.createEvent){
+            var ev = document.createEvent("HTMLEvents");
+            ev.initEvent(event_name, true, true)
+            return ev;
+        }
+        if (document.createEventObject){
+            var ev = document.createEventObject(    );
+            ev.eventType = event_name;
+            return ev;
+        }
+        return null;
+    }
+    T.addEventListener = function(tag, event_name, func){
+        
+        if(tag && tag.attachEvent){
+            if(event_name=="message"){
+                event_name="onmessage";
+                tag.attachEvent(event_name, func);
+            }else{
+                if (document.attachEvent) { // MSIE
+                    var currentHandler = func;
+                    tag.fakeEvents = 0; // an expando property
+
+                    tag.attachEvent("onpropertychange", function(event) {
+                        if (event.propertyName == event_name) {
+                            // execute the callback
+                            currentHandler({target:tag});
+                        }
+                    });
+
+                    dispatchFakeEvent = function(handler) {
+                        // fire the propertychange event
+                        document.documentElement.fakeEvents++;
+                    };
+                }
+            }
+            
+            return;   
+        }
+        if(tag && tag.addEventListener){
+            tag.addEventListener(event_name, func);
+            return;
+        }
+    }
+    T.dispatchEvent = function(elem, event_name){
+        var event = T.createEvent(event_name);
+        if(elem.dispatchEvent)
+            elem.dispatchEvent(event);
+        else{
+            elem[event_name]++; 
+        }
+    }
+    T.ie8fix = function(elem, tag_name){
+        if(IS_IE8){
+            var divelem = document.createElement('div');
+            divelem.className = tag_name;
+            elem.parentNode.insertBefore(divelem, elem);
+            var o = T.getOptions(elem, ["ape", "month", "topic", "animation", "preload"]);
+            elem.parentNode.removeChild(elem);
+            T.setOptions(divelem, o);
+            return divelem;
+        }
+        return elem;
+        
+    }
+    T.replace = function(){
+        /* IE8 special tags fix */   
+        if (navigator.appName.match("Microsoft")) {
+            var ua = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(ua) != null){
+                rv = parseFloat(RegExp.$1);
+                if(rv < 9){
+                    IS_IE8 = true;
                 }
             }
         }
-    }
-    T.replace = function(){
         /* where the magic happen... */
-        window.console.log(TAG_HANDLERS);
         for(var tag_name in TAG_HANDLERS) {
             var handler = TAG_HANDLERS[tag_name];
             var elems = document.getElementsByTagName(tag_name);
             for(var ix=0; ix<elems.length; ix++) {
-                handler(elems[ix]);
+                handler(T.ie8fix(elems[ix], tag_name));
             }
         }
     }

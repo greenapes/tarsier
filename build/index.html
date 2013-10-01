@@ -30,6 +30,12 @@
 
         <script>
         T.replace();
+        T.addEventListener(document.getElementsByTagName("ga:info-tribe")[0], 'loaded', function(ev){
+            T.startAnimation(ev.target);
+        });
+        T.addEventListener(document.getElementsByTagName("div")[0], 'loaded', function(ev){
+            T.startAnimation(ev.target);
+        });
         </script>
     </body>
     

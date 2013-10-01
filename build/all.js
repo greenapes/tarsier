@@ -2,9 +2,11 @@
     
     var T = {};
 
+    T.widgets = [];
     /* mapping between tag name supported and appropriate function handler */
     TAG_HANDLERS = {};
-
+    var TAGS = [];
+    var IS_IE8 = false;
     T.registerHandler = function(TAG_NAME, HANDLER) {
         TAG_HANDLERS[TAG_NAME] = HANDLER;
     }
@@ -48,6 +50,9 @@
         return result;
     }
 
+    T.setAttribute = function(ele, attr, value) {
+        ele.setAttribute(attr, value);
+    }
     /* HELPER
     get an options object from a DOM node 
     and an array of strings corresponding to the node's attributes
@@ -63,63 +68,167 @@
         }
         return o;
     }
-    
+    T.setOptions = function(node, options){
+        var o = {};
+        for(var o in options){
+            T.setAttribute(node, o, options[o]);
+        }
+    }
     T.sendMessage = function(elm, msg){
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
     
     T.startAnimation = function(tag){
-        if(tag)
+        if(tag){
             T.sendMessage(tag, "animate!");
+        }
     }
 
-    /* IE8 special tags fix */   
-    if (navigator.appName.match("Microsoft")) {
-        var ua = navigator.userAgent;
-        var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-        if (re.exec(ua) != null){
-            rv = parseFloat(RegExp.$1);
-            if(rv < 9){
-                for(var tag in TAG_HANDLERS){
-                    document.createElement(tag);     
+    T.createEvent = function(event_name){
+        if (document.createEvent){
+            var ev = document.createEvent("HTMLEvents");
+            ev.initEvent(event_name, true, true)
+            return ev;
+        }
+        if (document.createEventObject){
+            var ev = document.createEventObject(    );
+            ev.eventType = event_name;
+            return ev;
+        }
+        return null;
+    }
+    T.addEventListener = function(tag, event_name, func){
+        
+        if(tag && tag.attachEvent){
+            if(event_name=="message"){
+                event_name="onmessage";
+                tag.attachEvent(event_name, func);
+            }else{
+                if (document.attachEvent) { // MSIE
+                    var currentHandler = func;
+                    tag.fakeEvents = 0; // an expando property
+
+                    tag.attachEvent("onpropertychange", function(event) {
+                        if (event.propertyName == event_name) {
+                            // execute the callback
+                            currentHandler({target:tag});
+                        }
+                    });
+
+                    dispatchFakeEvent = function(handler) {
+                        // fire the propertychange event
+                        document.documentElement.fakeEvents++;
+                    };
+                }
+            }
+            
+            return;   
+        }
+        if(tag && tag.addEventListener){
+            tag.addEventListener(event_name, func);
+            return;
+        }
+    }
+    T.dispatchEvent = function(elem, event_name){
+        var event = T.createEvent(event_name);
+        if(elem.dispatchEvent)
+            elem.dispatchEvent(event);
+        else{
+            elem[event_name]++; 
+        }
+    }
+    T.ie8fix = function(elem, tag_name){
+        if(IS_IE8){
+            var divelem = document.createElement('div');
+            divelem.className = tag_name;
+            elem.parentNode.insertBefore(divelem, elem);
+            var o = T.getOptions(elem, ["ape", "month", "topic", "animation", "preload"]);
+            elem.parentNode.removeChild(elem);
+            T.setOptions(divelem, o);
+            return divelem;
+        }
+        return elem;
+        
+    }
+    T.replace = function(){
+        /* IE8 special tags fix */   
+        if (navigator.appName.match("Microsoft")) {
+            var ua = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(ua) != null){
+                rv = parseFloat(RegExp.$1);
+                if(rv < 9){
+                    IS_IE8 = true;
                 }
             }
         }
-    }
-    T.replace = function(){
         /* where the magic happen... */
-        window.console.log(TAG_HANDLERS);
         for(var tag_name in TAG_HANDLERS) {
             var handler = TAG_HANDLERS[tag_name];
             var elems = document.getElementsByTagName(tag_name);
             for(var ix=0; ix<elems.length; ix++) {
-                handler(elems[ix]);
+                handler(T.ie8fix(elems[ix], tag_name));
             }
         }
     }
     window.T = T; 
 })();
 ;// https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js
-var default_url = "https://fbapp.greenapes.com/";
-//var default_url = "http://localhost:5001/";;var default_url = default_url || "http://localhost/";
+// var default_url = "https://fbapp.greenapes.com/";
+var default_url = "http://localhost:5001/";;var default_url = default_url || "http://localhost/";
 
 function info_embed(node){
-    var o = T.getOptions(node, ["ape", "month", "topic", "animation"]);
+    var o = T.getOptions(node, ["ape", "month", "topic", "animation", "preload"]);
     var iframe = document.createElement('iframe');
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     iframe.style.overflow = "hidden";
     iframe.style.borderStyle = "none";
-    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&animation={0.animation}".supplant([o, default_url]);
+    iframe.marginheight="0";
+    iframe.marginwidth="0";
+    iframe.frameborder="0";
+    iframe.frameBorder = "no";
+    n = T.widgets.length;
+    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
     iframe.src = url;
-    node.appendChild(iframe);
-    var ms = parseFloat(o.animation);
-    if(!isNaN(ms)){ //mean that the parameter is a number that represent the delay in ms before we start the animation
-    	setTimeout(function(){
-    		T.startAnimation(node);
-    	}, ms)
+
+    try{
+        node.appendChild(iframe);
+    }catch(e){
     }
+    
+    T.widgets.push(node);
+    
+    function onReady(e) {
+        var node = e.target;
+        var o = T.getOptions(node, ["ape", "month", "topic", "animation"]);
+        var ms = parseFloat(o.animation);
+        // if ms is != from Nan mean that the parameter is a number 
+        // that represent the delay in ms before we start the animation
+        if(!isNaN(ms)){
+            setTimeout(function(){
+                T.startAnimation(node);
+            }, ms);
+        }
+    }
+
+    T.addEventListener(node, 'loaded', onReady);
+
+    
 }
 
 /* functions declaration for various widget embedding */
 T.registerHandler("ga:info-tribe", info_embed);
+var currentHandler;
+
+function receiveMessage(event)
+{
+    // we read the id from the parameter
+    var params = event.data.split(";");
+    if(params.length == 2 && params[1] == "ready!") {
+        var node = T.widgets[params[0]];
+        T.dispatchEvent(node, "loaded");
+    }
+}
+
+T.addEventListener(window, "message", receiveMessage);
