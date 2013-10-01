@@ -46,8 +46,9 @@ this tag is for the widget of a tribe's infographic
 
 * ape: 
 * month:
+* preload: [fade | top]
+choose the preferred animation for preload
 * animation: [ none | delay in ms | manual | scroll ]
-
 #### animate!
 
 if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
@@ -80,6 +81,32 @@ T.sendMessage(g, "animate!");
 
 ![](assets/ga_info-tribe_social.png)
 
+About IE8
+---------
+Tarsier supports IE8 substituting HTML5 placeholder tags with div elements with class name = "html5 tag name":
+
+```html
+<ga:info-tribe ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+```
+
+will become like this on IE8:
+
+```html
+<div class="ga:info-tribe" ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+```
+
+keep in mind that when you write stylesheet, if you want to support IE8:
+
+```css
+.ga\:info-tribe,
+ga\:info-tribe {
+	display: inline-block;
+	width:645px;
+	height:645px;
+	overflow:hidden;
+	border:1px solid #000;
+}
+```
 
 Use the library in your own project
 -----------------------------------
