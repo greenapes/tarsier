@@ -60,25 +60,25 @@ Available GA:TAGS
 -----------------
 
 ### ga:info-tribe
-this tag is for the widget of a tribe's infographic
+
+This tag correspons to a widget showing the infograph of an ape's tribe. 
 
 #### parameters:
 
-* ape: 
-* month:
-* animation: [ none | delay in ms | manual | scroll ]
+ * ape: ID of the ape for which to show the infograph
+ * month: Select the month for the infrograph
+ * topic: [ actions | eating | housing | jungle | shopping ]. Select which section of the infrograph is shown.
+ * animation: [ none | delay in ms | manual | scroll ]. Decide which animation is used for the infograph:
+   * None: no animation, the infograph is shown in its final complete format
+   * Delay: the infograph automatically animates after the specified number of milliseconds.
+   * Scroll: the infograph automatically animates when it is scrolled into the browser view
+   * Manual: the infograph waits for an event to begin animation. You need to send the even with the following code:
 
-#### animate!
+     ```javascript
+     var g = document.getElementsByTagName("ga:info-tribe")[0];
+     T.sendMessage(g, "animate!");
+     ```
 
-If the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
-
-```javascript
-var g = document.getElementsByTagName("ga:info-tribe")[0];
-T.sendMessage(g, "animate!");
-```
-
-
-* topic: [ actions | eating | housing | jungle | shopping ]
 
 ##### example of topic actions
 
