@@ -2,23 +2,31 @@
 <html>
     <head>
         <style>
-            ga\:info-tribe{
+            * {
+                font-family: Helvetica, Arial;
+            }
+            .ga\:info-tribe,
+            ga\:info-tribe
+            {
                 display: inline-block;
                 width:645px;
                 height:645px;
                 overflow:hidden;
-
+                border:1px solid #000;
+            }
+            iframe
+            {
+                overflow:hidden;
+                border:none;
             }
         </style>
         <script src="all.js"></script>
     </head>
     <body>
-        <h1>tarsier - javascript library for widget embedding</h1>
-        <ga:info-tribe ape="me" month="04" topic="actions"  animation="3000"></ga:info-tribe>
-        <ga:info-tribe ape="me" month="04" topic="eating"   animation="3000"></ga:info-tribe>
-        <ga:info-tribe ape="me" month="04" topic="home"     animation="3000"></ga:info-tribe>
-        <ga:info-tribe ape="me" month="04" topic="jungle"   animation="3000"></ga:info-tribe>
-        <ga:info-tribe ape="me" month="04" topic="moving"   animation="3000"></ga:info-tribe>
+        <h1>tarsier.js</h1>
+        <p>javascript library for widget embedding</p>
+        <ga:info-tribe ape="me" month="04" topic="actions" preload="fade" animation="manual" />
+        
 
         <script>
         T.replace();
