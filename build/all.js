@@ -173,9 +173,8 @@
     }
     window.T = T; 
 })();
-;// https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js
-// var default_url = "https://fbapp.greenapes.com/";
-var default_url = "http://localhost:5001/";;var default_url = default_url || "http://localhost/";
+;//var default_url = default_url || "https://fbapp.greenapes.com/";
+var default_url = default_url || "https://fb-greenapes.herokuapp.com/";
 
 function info_embed(node){
     var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload"]);

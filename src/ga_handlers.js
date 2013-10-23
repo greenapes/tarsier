@@ -1,4 +1,5 @@
-var default_url = default_url || "http://localhost/";
+//var default_url = default_url || "https://fbapp.greenapes.com/";
+var default_url = default_url || "https://fb-greenapes.herokuapp.com/";
 
 function info_embed(node){
     var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload"]);
