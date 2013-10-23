@@ -65,9 +65,10 @@ This tag correspons to a widget showing the infograph of an ape's tribe.
 
 #### parameters:
 
- * ape: ID of the ape for which to show the infograph
- * month: Select the month for the infrograph
- * topic: [ actions | eating | housing | jungle | shopping ]. Select which section of the infrograph is shown.
+ * ape: ID of the ape for which to show the infograph. Use ape="greenapes" to get the infopraph of the entire greenApes community
+ * date: Select the start date for the infrograph. Format "YYYY/MM/DD" or "YYYY/MM/DD hh:mm:ss".
+ * duration: time frame in days for the infograph
+ * topic: [ actions | eating | housing | jungle | shopping | moving ]. Select which section of the infrograph is shown.
  * animation: [ none | delay in ms | manual | scroll ]. Decide which animation is used for the infograph:
    * None: no animation, the infograph is shown in its final complete format
    * Delay: the infograph automatically animates after the specified number of milliseconds.
@@ -105,13 +106,13 @@ About IE8
 Tarsier supports IE8 substituting HTML5 placeholder tags with div elements with class name = "html5 tag name":
 
 ```html
-<ga:info-tribe ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+<ga:info-tribe ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
 ```
 
 will become like this on IE8:
 
 ```html
-<div class="ga:info-tribe" ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+<div class="ga:info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" topic="actions" animation="5000"></ga:info-tribe>
 ```
 
 keep in mind that when you write stylesheet, if you want to support IE8:
