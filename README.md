@@ -3,63 +3,82 @@ Tarsier - JS library for greenApes
 This javascript library allows you to integrate widgets that display information for
 users of greenApes (www.greenapes.com).
 
-**NOTE**: The library is not ready yet, but it is in active development. Documentation will be added later.
+**NOTE**: The library is not ready for production yet, but it is in active development.
+
+Tarsier supports the following browsers: Internet Explorer 8 and following, Firefox (current), Chrome (current), Safari 6.
+
+### Quick tutorial
+
+How to embed greenApes widgets into your website:
+
+1. **Include the javascript**. You need to include the `tarsier.min.js` script in your page's head section.
+   You can use our (SSL-only) CDN, or mirror locally:
+
+   ```html
+   <script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
+   ```
+
+2. **Use our tags in your page**. Widgets can be embedded into the webpage through the usage of custom HTML
+   tags, with prefix `ga:`. For instance:
+
+   ```html
+   <ga:info-tribe ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+   ```
+
+3. **Run Tarsier's replacement function**. When the page is loaded, call the `replace()` function on the
+   global Tarsier object `T`. Tarsier will the populate all the `ga:` widgets:
+
+   ```javascript
+   T.replace();
+   ```
+
+   You can place this call in a `<script>` tag at the end of the page, or wrapping it in a jquery style
+   `document.ready` callback.
 
 
+### How to style ga nodes
 
-Embed greenApes widgets in your page in 3 steps!!
-----------------------------------------------------------
-### 1. script
+The correct way to add style to ga tags is by applying CSS to both the nodes and classes with the same name:
 
-first of all, you need to include the tarsier.min.js script in your page head section.
-Sure you can use the greenApes cdn if you want!
-
-```html
-<script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
+```css
+.ga\:info-tribe,
+ga\:info-tribe {
+    display:  inline-block;
+    width:    645px;
+    height:   645px;
+    overflow: hidden;
+    border:   1px solid #000;
+}
 ```
 
-### 2. ga:tag
+This is required for IE8 compatibility. If you don't need IE8 compatibility, you can style just the node name.
 
-put the available tags in your html page:
-
-```html
-<ga:info-tribe ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
-```
-
-### 3. replace!
-
-when the page is loaded call the replace function. Tarsier will inserts the greenapes widgets into the ga:tags:
-
-```javascript
-T.replace();
-```
-
-this could be achieved putting this script in the bottom of the page or wrapping in a jquery style document.ready callback.
+**NOTE:** `:` is a special character in CSS and must be escaped with a `\` (backslash) when used in node and tags names.
 
 
 Available GA:TAGS
 -----------------
 
 ### ga:info-tribe
-this tag is for the widget of a tribe's infographic
+
+This tag correspons to a widget showing the infograph of an ape's tribe. 
 
 #### parameters:
 
-* ape: 
-* month:
-* animation: [ none | delay in ms | manual | scroll ]
+ * ape: ID of the ape for which to show the infograph
+ * month: Select the month for the infrograph
+ * topic: [ actions | eating | housing | jungle | shopping ]. Select which section of the infrograph is shown.
+ * animation: [ none | delay in ms | manual | scroll ]. Decide which animation is used for the infograph:
+   * None: no animation, the infograph is shown in its final complete format
+   * Delay: the infograph automatically animates after the specified number of milliseconds.
+   * Scroll: the infograph automatically animates when it is scrolled into the browser view
+   * Manual: the infograph waits for an event to begin animation. You need to send the even with the following code:
 
-#### animate!
+     ```javascript
+     var g = document.getElementsByTagName("ga:info-tribe")[0];
+     T.sendMessage(g, "animate!");
+     ```
 
-    if the animation attribute is set to manual, to start the chart animation you will have to send a message to the widget as below:
-
-    ```javascript
-    var g = document.getElementsByTagName("ga:info-tribe")[0];
-    T.sendMessage(g, "animate!");
-    ```
-
-
-* topic: [ actions | eating | housing | jungle | shopping ]
 
 ##### example of topic actions
 
@@ -107,53 +126,3 @@ ga\:info-tribe {
 	border:1px solid #000;
 }
 ```
-
-Use the library in your own project
------------------------------------
-The source code is splitted in 2 main files:
-
-* tarsier.js
-* handlers.js
-
-### tarsier.js
-contains helpers for DOM traversing and attributes reading.
-### handlers.js
-contains the handlers that will process the tag specified
-
-
-```
-T.registerHandler("YOUR TAG NAME", function(node){
-    //node manipulation....
-});
-```
-
-How to build
-------------
-```
-npm install -g grunt-cli
-```
-
-requirements:
-
- - nodejs
- - npm
-
-install grunt:
-```
-npm install -g grunt-cli
-```
-
-then from the project root folder
-```
-npm install
-```
-
-npm will install all the dependencies from package.json
-
-To minify the library, from the project root folder
-
-```
-grunt uglify
-```
-
-It will save on build/widget.min.js the minified version of src/widget.js
