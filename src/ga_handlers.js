@@ -24,7 +24,7 @@ function info_embed(node){
     
     function onReady(e) {
         var node = e.target;
-        var o = T.getOptions(node, ["ape", "month", "topic", "animation"]);
+        var o = T.getOptions(node, ["animation"]);
         var ms = parseFloat(o.animation);
         // if ms is != from Nan mean that the parameter is a number 
         // that represent the delay in ms before we start the animation
