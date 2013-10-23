@@ -1,7 +1,7 @@
 var default_url = default_url || "http://localhost/";
 
 function info_embed(node){
-    var o = T.getOptions(node, ["ape", "month", "topic", "animation", "preload"]);
+    var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload"]);
     var iframe = document.createElement('iframe');
     iframe.style.width = "100%";
     iframe.style.height = "100%";
@@ -12,7 +12,7 @@ function info_embed(node){
     iframe.frameborder="0";
     iframe.frameBorder = "no";
     n = T.widgets.length;
-    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/monthly/2013/{0.month}/section/{0.topic}?preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
+    var url = "{1}/widget#/tribes-actions/{0.ape}/stats/interval/section/{0.topic}?start_date={0.date}&duration={0.duration}&preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
     iframe.src = url;
 
     try{
