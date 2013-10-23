@@ -22,7 +22,7 @@ How to embed greenApes widgets into your website:
    tags, with prefix `ga:`. For instance:
 
    ```html
-   <ga:info-tribe ape="me" month="05" topic="actions" animation="5000"></ga:info-tribe>
+   <ga:info-tribe ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
    ```
 
 3. **Run Tarsier's replacement function**. When the page is loaded, call the `replace()` function on the
@@ -112,7 +112,7 @@ Tarsier supports IE8 substituting HTML5 placeholder tags with div elements with 
 will become like this on IE8:
 
 ```html
-<div class="ga:info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" topic="actions" animation="5000"></ga:info-tribe>
+<div class="ga:info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
 ```
 
 keep in mind that when you write stylesheet, if you want to support IE8:
