@@ -123,14 +123,13 @@ Tarsier supports IE8 substituting HTML5 placeholder tags with div elements with 
 will become like this on IE8:
 
 ```html
-<div class="ga:info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
+<div class="ga_info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
 ```
 
 keep in mind that when you write stylesheet, if you want to support IE8:
 
 ```css
-.ga\:info-tribe,
-ga\:info-tribe {
+.ga_info-tribe {
 	display: inline-block;
 	width:645px;
 	height:645px;
