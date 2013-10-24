@@ -50,22 +50,37 @@ The correct way to add style to ga tags is by applying CSS to both the nodes and
 }
 ```
 
-tarsier add .ga_info-tribe class to handled tags
+**NOTE:** `:` is a special character in CSS and must be escaped with a `\` (backslash) when used in node and tags names.
+
+
+IE8 support
+-----------
+If you need to support IE8, you need to alter your markup a little. Instead of using the custom tags directly, you need
+to define a div with a similarly named class. For instance, this tag:
+
+```html
+<ga:info-tribe ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
+```
+
+needs to become like this:
+
+```html
+<div class="ga_info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
+```
+
+Moreover, you also need the alter the CSS to style the class instead of the div:
 
 ```css
 .ga_info-tribe {
-    display:  inline-block;
-    width:    645px;
-    height:   645px;
-    overflow: hidden;
-    border:   1px solid #000;
+	display: inline-block;
+	width:645px;
+	height:645px;
+	overflow:hidden;
+	border:1px solid #000;
 }
 ```
 
-This is required for IE8 compatibility. If you don't need IE8 compatibility, you can style just the node name.
-
-**NOTE:** `:` is a special character in CSS and must be escaped with a `\` (backslash) when used in node and tags names.
-
+This syntax is obviously supported also in all other browsers.
 
 Available GA:TAGS
 -----------------
@@ -111,28 +126,3 @@ This tag correspons to a widget showing the infograph of an ape's tribe.
 
 ![](assets/ga_info-tribe_social.png)
 
-About IE8
----------
-Tarsier supports IE8 substituting HTML5 placeholder tags with div elements with class name = "html5 tag name":
-
-```html
-<ga:info-tribe ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
-```
-
-will become like this on IE8:
-
-```html
-<div class="ga_info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
-```
-
-keep in mind that when you write stylesheet, if you want to support IE8:
-
-```css
-.ga_info-tribe {
-	display: inline-block;
-	width:645px;
-	height:645px;
-	overflow:hidden;
-	border:1px solid #000;
-}
-```
