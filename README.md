@@ -15,7 +15,7 @@ How to embed greenApes widgets into your website:
    You can use our (SSL-only) CDN, or mirror locally:
 
    ```html
-   <script src="https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js"></script>
+   <script src="https://greenapes.r.worldssl.net/tarsier/v0.2/tarsier.min.js"></script>
    ```
 
 2. **Use our tags in your page**. Widgets can be embedded into the webpage through the usage of custom HTML
