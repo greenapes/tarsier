@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 			  separator: ';',
 			},
 			dist: {
-			  src: ['src/tarsier.js', 'src/ga_variables.js', 'src/ga_handlers.js'],
+			  src: ['src/tarsier.js', 'src/ga_handlers.js'],
 			  dest: 'build/all.js',
 			}
 		},
