@@ -80,10 +80,9 @@ This tag correspons to a widget showing the infograph of an ape's tribe.
  * date: Select the start date for the infrograph. Format "YYYY/MM/DD" or "YYYY/MM/DD hh:mm:ss".
  * duration: time frame in days for the infograph
  * topic: [ actions | eating | house | jungle | shopping | moving ]. Select which section of the infrograph is shown.
- * animation: [ none | delay in ms | manual | scroll ]. Decide which animation is used for the infograph:
+ * animation: [ none | delay in ms | manual ]. Decide which animation is used for the infograph:
    * None: no animation, the infograph is shown in its final complete format
    * Delay: the infograph automatically animates after the specified number of milliseconds.
-   * Scroll: the infograph automatically animates when it is scrolled into the browser view
    * Manual: the infograph waits for an event to begin animation. You need to send the even with the following code:
 
      ```javascript
