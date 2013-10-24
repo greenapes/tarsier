@@ -138,11 +138,12 @@
         }
     }
     T.ie8fix = function(elem, tag_name){
+        elem.className += " " + tag_name.replace(":", "_");
         if(IS_IE8){
             var divelem = document.createElement('div');
-            divelem.className = tag_name;
+            divelem.className = elem.className;
             elem.parentNode.insertBefore(divelem, elem);
-            var o = T.getOptions(elem, ["ape", "month", "topic", "animation", "preload"]);
+            var o = T.getOptions(elem, ["ape", "date", "duration", "topic", "animation", "preload"]);
             elem.parentNode.removeChild(elem);
             T.setOptions(divelem, o);
             return divelem;
@@ -173,7 +174,10 @@
     }
     window.T = T; 
 })();
-;//var default_url = default_url || "https://fbapp.greenapes.com/";
+;// https://greenapes.r.worldssl.net/tarsier/v0.1/tarsier.min.js
+// var default_url = "https://fbapp.greenapes.com/";
+
+var default_url = "http://localhost:5001/";;//var default_url = default_url || "https://fbapp.greenapes.com/";
 var default_url = default_url || "https://fb-greenapes.herokuapp.com/";
 
 function info_embed(node){
@@ -188,6 +192,13 @@ function info_embed(node){
     iframe.frameborder="0";
     iframe.frameBorder = "no";
     n = T.widgets.length;
+
+    var today = new Date();
+    o["ape"] = o["ape"] || "me";
+    o["date"] = o["date"] || ([today.getFullYear(), today.getMonth()+1, today.getDate()].join("/"));
+    o["animation"] = o["animation"] || "none";
+    o["preload"] = o["preload"] || "fade";
+    o["duration"] = o["duration"] || "";
     var url = "{1}/widget#/tribes-actions/{0.ape}/stats/interval/section/{0.topic}?start_date={0.date}&duration={0.duration}&preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
     iframe.src = url;
 
