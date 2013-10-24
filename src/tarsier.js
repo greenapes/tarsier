@@ -138,9 +138,10 @@
         }
     }
     T.ie8fix = function(elem, tag_name){
+        elem.className += " " + tag_name.replace(":", "_");
         if(IS_IE8){
             var divelem = document.createElement('div');
-            divelem.className = tag_name;
+            divelem.className = elem.className;
             elem.parentNode.insertBefore(divelem, elem);
             var o = T.getOptions(elem, ["ape", "date", "duration", "topic", "animation", "preload"]);
             elem.parentNode.removeChild(elem);
