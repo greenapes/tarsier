@@ -142,7 +142,7 @@
             var divelem = document.createElement('div');
             divelem.className = tag_name;
             elem.parentNode.insertBefore(divelem, elem);
-            var o = T.getOptions(elem, ["ape", "month", "topic", "animation", "preload"]);
+            var o = T.getOptions(elem, ["ape", "date", "duration", "topic", "animation", "preload"]);
             elem.parentNode.removeChild(elem);
             T.setOptions(divelem, o);
             return divelem;
