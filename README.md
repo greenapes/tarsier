@@ -41,7 +41,7 @@ How to embed greenApes widgets into your website:
 The correct way to add style to ga tags is by applying CSS to both the nodes and classes with the same name:
 
 ```css
-.ga\:info-tribe {
+ga\:info-tribe {
     display:  inline-block;
     width:    645px;
     height:   645px;
@@ -55,20 +55,8 @@ The correct way to add style to ga tags is by applying CSS to both the nodes and
 
 IE8 support
 -----------
-If you need to support IE8, you need to alter your markup a little. Instead of using the custom tags directly, you need
-to define a div with a similarly named class. For instance, this tag:
-
-```html
-<ga:info-tribe ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
-```
-
-needs to become like this:
-
-```html
-<div class="ga_info-tribe" ape="me" date="2013/10/01 10:00:00" duration="10" topic="actions" animation="5000"></ga:info-tribe>
-```
-
-Moreover, you also need the alter the CSS to style the class instead of the div:
+If you need to support IE8, you need to alter your style a little. Instead of styling the custom class, which is not
+supported, you need to style a class with an equivalent name, and with `_` in place of `:`:
 
 ```css
 .ga_info-tribe {
@@ -80,7 +68,7 @@ Moreover, you also need the alter the CSS to style the class instead of the div:
 }
 ```
 
-This syntax is obviously supported also in all other browsers.
+This syntax is supported also in all other browsers, so you don't need to duplicate the CSS.
 
 Available GA:TAGS
 -----------------
