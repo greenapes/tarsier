@@ -152,7 +152,6 @@
         
     }
     T.replace = function(){
-        console.log("sono io");
         /* IE8 special tags fix */   
         if (navigator.appName.match("Microsoft")) {
             var ua = navigator.userAgent;
