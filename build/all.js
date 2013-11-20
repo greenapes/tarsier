@@ -152,6 +152,7 @@
         
     }
     T.replace = function(){
+        console.log("sono io");
         /* IE8 special tags fix */   
         if (navigator.appName.match("Microsoft")) {
             var ua = navigator.userAgent;
@@ -166,7 +167,11 @@
         /* where the magic happen... */
         for(var tag_name in TAG_HANDLERS) {
             var handler = TAG_HANDLERS[tag_name];
-            var elems = document.getElementsByTagName(tag_name);
+            var live = document.getElementsByTagName(tag_name);
+            var elems = [];
+            for(var ix=0; ix<live.length; ix++) {
+                elems.push(live[ix]);
+            }
             for(var ix=0; ix<elems.length; ix++) {
                 handler(T.ie8fix(elems[ix], tag_name));
             }
