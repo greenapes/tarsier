@@ -1,0 +1,12 @@
+{
+    "name": "tarsier",
+    "version": "0.2",
+    "ignore": [
+        "assets",
+        "src",
+        ".gitignore",
+        "bower.json",
+        "Gruntfile.js",
+        "package.json"
+    ]
+}
