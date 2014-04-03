@@ -1,5 +1,5 @@
 (function main() {
-    
+
     var T = {};
 
     T.widgets = [];
@@ -10,7 +10,7 @@
     T.registerHandler = function(TAG_NAME, HANDLER) {
         TAG_HANDLERS[TAG_NAME] = HANDLER;
     }
-    
+
     /*  HELPER
         supplant */
     if(!String.prototype.supplant) {
@@ -54,7 +54,7 @@
         ele.setAttribute(attr, value);
     }
     /* HELPER
-    get an options object from a DOM node 
+    get an options object from a DOM node
     and an array of strings corresponding to the node's attributes
 
         var a = document.getElementById('a_link');
@@ -77,7 +77,7 @@
     T.sendMessage = function(elm, msg){
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
-    
+
     T.startAnimation = function(tag){
         if(tag){
             T.sendMessage(tag, "animate!");
@@ -98,7 +98,7 @@
         return null;
     }
     T.addEventListener = function(tag, event_name, func){
-        
+
         if(tag && tag.attachEvent){
             if(event_name=="message"){
                 event_name="onmessage";
@@ -121,8 +121,8 @@
                     };
                 }
             }
-            
-            return;   
+
+            return;
         }
         if(tag && tag.addEventListener){
             tag.addEventListener(event_name, func);
@@ -134,7 +134,7 @@
         if(elem.dispatchEvent)
             elem.dispatchEvent(event);
         else{
-            elem[event_name]++; 
+            elem[event_name]++;
         }
     }
     T.ie8fix = function(elem, tag_name){
@@ -149,10 +149,10 @@
             return divelem;
         }
         return elem;
-        
+
     }
     T.replace = function(){
-        /* IE8 special tags fix */   
+        /* IE8 special tags fix */
         if (navigator.appName.match("Microsoft")) {
             var ua = navigator.userAgent;
             var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
@@ -176,13 +176,13 @@
             }
         }
     }
-    window.T = T; 
+    window.T = T;
 })();
 ;//var default_url = default_url || "https://fbapp.greenapes.com/";
 var default_url = default_url || "https://fb-greenapes.herokuapp.com/";
 
-function info_embed(node){
-    var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload"]);
+function info_tribe_embed(node){
+    var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload", "embedded"]);
     var iframe = document.createElement('iframe');
     iframe.style.width = "100%";
     iframe.style.height = "100%";
@@ -201,15 +201,18 @@ function info_embed(node){
     o["preload"] = o["preload"] || "fade";
     o["duration"] = o["duration"] || "";
     var url = "{1}/widget#/tribes-actions/{0.ape}/stats/interval/section/{0.topic}?start_date={0.date}&duration={0.duration}&preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
+    if(o["embedded"]) {
+        url += "&embedded";
+    }
     iframe.src = url;
 
     try{
         node.appendChild(iframe);
     }catch(e){
     }
-    
+
     T.widgets.push(node);
-    
+
     function onReady(e) {
         var node = e.target;
         var o = T.getOptions(node, ["animation"]);
@@ -224,12 +227,59 @@ function info_embed(node){
     }
 
     T.addEventListener(node, 'loaded', onReady);
+}
 
-    
+function info_ape_embed(node){
+    var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload", "embedded"]);
+    var iframe = document.createElement('iframe');
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.overflow = "hidden";
+    iframe.style.borderStyle = "none";
+    iframe.marginheight="0";
+    iframe.marginwidth="0";
+    iframe.frameborder="0";
+    iframe.frameBorder = "no";
+    n = T.widgets.length;
+
+    var today = new Date();
+    o["ape"] = o["ape"] || "me";
+    o["date"] = o["date"] || ([today.getFullYear(), today.getMonth()+1, today.getDate()].join("/"));
+    o["animation"] = o["animation"] || "none";
+    o["preload"] = o["preload"] || "fade";
+    o["duration"] = o["duration"] || "";
+    var url = "{1}/widget#/{0.ape}/stats/interval/section/{0.topic}?start_date={0.date}&duration={0.duration}&preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
+    if(o["embedded"]) {
+        url += "&embedded";
+    }
+    iframe.src = url;
+
+    try{
+        node.appendChild(iframe);
+    }catch(e){
+    }
+
+    T.widgets.push(node);
+
+    function onReady(e) {
+        var node = e.target;
+        var o = T.getOptions(node, ["animation"]);
+        var ms = parseFloat(o.animation);
+        // if ms is != from Nan mean that the parameter is a number 
+        // that represent the delay in ms before we start the animation
+        if(!isNaN(ms)){
+            setTimeout(function(){
+                T.startAnimation(node);
+            }, ms);
+        }
+    }
+
+    T.addEventListener(node, 'loaded', onReady);
 }
 
 /* functions declaration for various widget embedding */
-T.registerHandler("ga:info-tribe", info_embed);
+T.registerHandler("ga:info-tribe", info_tribe_embed);
+T.registerHandler("ga:info-ape", info_ape_embed);
 var currentHandler;
 
 function receiveMessage(event)
