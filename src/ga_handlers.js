@@ -48,6 +48,31 @@ function info_tribe_embed(node){
 
     T.addEventListener(node, 'loaded', onReady);
 }
+
+function info_ape_embed(node){
+    var o = T.getOptions(node, ["ape", "date", "duration", "topic", "animation", "preload", "embedded"]);
+    var iframe = document.createElement('iframe');
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.overflow = "hidden";
+    iframe.style.borderStyle = "none";
+    iframe.marginheight="0";
+    iframe.marginwidth="0";
+    iframe.frameborder="0";
+    iframe.frameBorder = "no";
+    n = T.widgets.length;
+
+    var today = new Date();
+    o["ape"] = o["ape"] || "me";
+    o["date"] = o["date"] || ([today.getFullYear(), today.getMonth()+1, today.getDate()].join("/"));
+    o["animation"] = o["animation"] || "none";
+    o["preload"] = o["preload"] || "fade";
+    o["duration"] = o["duration"] || "";
+    window.console.log(o);
+    var url = "{1}/widget#/{0.ape}/stats/interval/section/{0.topic}?start_date={0.date}&duration={0.duration}&preload=true&preload_animation={0.preload}&animation={0.animation}&id={2}".supplant([o, default_url, n]);
+    if(o["embedded"]) {
+        url += "&embedded";
+    }
     iframe.src = url;
 
     try{
@@ -75,6 +100,7 @@ function info_tribe_embed(node){
 
 /* functions declaration for various widget embedding */
 T.registerHandler("ga:info-tribe", info_tribe_embed);
+T.registerHandler("ga:info-ape", info_ape_embed);
 var currentHandler;
 
 function receiveMessage(event)
