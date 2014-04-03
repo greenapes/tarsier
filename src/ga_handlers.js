@@ -27,9 +27,9 @@ function info_embed(node){
         node.appendChild(iframe);
     }catch(e){
     }
-    
+
     T.widgets.push(node);
-    
+
     function onReady(e) {
         var node = e.target;
         var o = T.getOptions(node, ["animation"]);
@@ -44,8 +44,6 @@ function info_embed(node){
     }
 
     T.addEventListener(node, 'loaded', onReady);
-
-    
 }
 
 /* functions declaration for various widget embedding */

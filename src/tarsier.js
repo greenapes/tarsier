@@ -1,5 +1,5 @@
 (function main() {
-    
+
     var T = {};
 
     T.widgets = [];
@@ -10,7 +10,7 @@
     T.registerHandler = function(TAG_NAME, HANDLER) {
         TAG_HANDLERS[TAG_NAME] = HANDLER;
     }
-    
+
     /*  HELPER
         supplant */
     if(!String.prototype.supplant) {
@@ -54,7 +54,7 @@
         ele.setAttribute(attr, value);
     }
     /* HELPER
-    get an options object from a DOM node 
+    get an options object from a DOM node
     and an array of strings corresponding to the node's attributes
 
         var a = document.getElementById('a_link');
@@ -77,7 +77,7 @@
     T.sendMessage = function(elm, msg){
         elm.getElementsByTagName("iframe")[0].contentWindow.postMessage(msg, '*');
     }
-    
+
     T.startAnimation = function(tag){
         if(tag){
             T.sendMessage(tag, "animate!");
@@ -98,7 +98,7 @@
         return null;
     }
     T.addEventListener = function(tag, event_name, func){
-        
+
         if(tag && tag.attachEvent){
             if(event_name=="message"){
                 event_name="onmessage";
@@ -121,8 +121,8 @@
                     };
                 }
             }
-            
-            return;   
+
+            return;
         }
         if(tag && tag.addEventListener){
             tag.addEventListener(event_name, func);
@@ -134,7 +134,7 @@
         if(elem.dispatchEvent)
             elem.dispatchEvent(event);
         else{
-            elem[event_name]++; 
+            elem[event_name]++;
         }
     }
     T.ie8fix = function(elem, tag_name){
@@ -149,10 +149,10 @@
             return divelem;
         }
         return elem;
-        
+
     }
     T.replace = function(){
-        /* IE8 special tags fix */   
+        /* IE8 special tags fix */
         if (navigator.appName.match("Microsoft")) {
             var ua = navigator.userAgent;
             var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
@@ -176,5 +176,5 @@
             }
         }
     }
-    window.T = T; 
+    window.T = T;
 })();
