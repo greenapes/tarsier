@@ -6,14 +6,16 @@
                 font-family: Helvetica, Arial;
             }
             .ga\:info-tribe,
-            ga\:info-tribe
+            ga\:info-tribe,
+            .ga\:info-ape,
+            ga\:info-ape
             {
-                display: inline-block;
+                display: block;
                 width:645px;
                 height:645px;
                 overflow:hidden;
-                border:1px solid #000;
             }
+
             iframe
             {
                 overflow:hidden;
@@ -25,18 +27,19 @@
     <body>
         <h1>tarsier.js</h1>
         <p>javascript library for widget embedding</p>
-        <ga:info-tribe ape="greenapes" date="10/01/2013 10:00:00" duration="10" topic="shopping" preload="fade" animation="manual" />
-        
+        <ga:info-ape ape="me" date="01/01/2013 10:00:00" duration="1000" topic="actions" preload="fade" animation="300" embedded="true"></ga:info-ape>
+        <ga:info-ape ape="me" date="01/01/2013 10:00:00" duration="1000" topic="eating"  preload="fade" animation="300" embedded="true"></ga:info-ape>
+        <ga:info-ape ape="me" date="01/01/2013 10:00:00" duration="1000" topic="moving"  preload="fade" animation="300" embedded="true"></ga:info-ape>
+        <ga:info-ape ape="me" date="01/01/2013 10:00:00" duration="1000" topic="housing" preload="fade" animation="300" embedded="true"></ga:info-ape>
+        <ga:info-ape ape="me" date="01/01/2013 10:00:00" duration="1000" topic="jungle"  preload="fade" animation="300" embedded="true"></ga:info-ape>
+
 
         <script>
         T.replace();
-        T.addEventListener(document.getElementsByTagName("ga:info-tribe")[0], 'loaded', function(ev){
-            T.startAnimation(ev.target);
-        });
+        
         // T.addEventListener(document.getElementsByTagName("div")[0], 'loaded', function(ev){
         //     T.startAnimation(ev.target);
         // });
         </script>
     </body>
-    
 </html>
